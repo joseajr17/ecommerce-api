@@ -29,4 +29,12 @@ public class Product {
     private String category;
     private int stock;
     // To Do: Adicionar Imagem a um Produto
+
+    public Product(ProductRequestDTO data){
+        this.name = data.name();
+        this.description = data.description();
+        this.price = data.price();
+        this.category = data.category();
+        this.stock = data.stock();
+    }
 }
