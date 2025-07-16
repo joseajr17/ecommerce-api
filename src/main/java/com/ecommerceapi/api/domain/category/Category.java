@@ -20,7 +20,6 @@ public class Category {
     @Id
     @GeneratedValue
     private UUID id;
-
     private String name;
 
     // Uma categoria pode ter vários produtos
