@@ -1,9 +1,7 @@
 package com.ecommerceapi.api.domain.product;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.ecommerceapi.api.domain.category.Category;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +23,14 @@ public class Product {
     private String name;
     private String description;
     private BigDecimal price;
-    // To Do: Criar a entidade de Category
-    private String category;
     private int stock;
+
+    // Vários produtos podem estar contido em uma categoria
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
     // To Do: Adicionar Imagem a um Produto
 
     public Product(ProductRequestDTO data){
