@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -37,6 +38,15 @@ public class ProductService {
         return toProductResponseDTO(newProduct);
     }
 
+    public List<ProductResponseDTO> getProducts() {
+        List<Product> products = productRepository.findAll();
+
+        // Mapear cada entidade Product para ProductResponseDTO
+        return products.stream()
+                .map(this::toProductResponseDTO)
+                .toList();
+    }
+
     private ProductResponseDTO toProductResponseDTO(Product product) {
         return new ProductResponseDTO(
                 product.getId(),
@@ -48,13 +58,11 @@ public class ProductService {
         );
     }
 
-    public List<ProductResponseDTO> getProducts() {
-        List<Product> products = productRepository.findAll();
+    public ProductResponseDTO getProductDetails(UUID productId) {
+        Product product = this.productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
-        // Mapear cada entidade Product para ProductResponseDTO
-        return products.stream()
-                .map(this::toProductResponseDTO)
-                .toList();
+        return toProductResponseDTO(product);
     }
 
 }
