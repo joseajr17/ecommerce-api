@@ -74,4 +74,28 @@ public class ProductService {
         return filtered.stream().map(this::toProductResponseDTO).toList();
     }
 
+    public ProductResponseDTO updateProduct(UUID productId, ProductRequestDTO data) {
+        Product product = this.productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+        product.setName(data.name() == null ? product.getName() : data.name());
+        product.setDescription(data.description() == null ? product.getDescription() : data.description());
+        BigDecimal newPrice = data.price() == null ? product.getPrice() : data.price();
+        product.setPrice(newPrice);
+        int newStock = data.stock() == null ? product.getStock() : data.stock();
+        product.setStock(newStock);
+
+        Category newCategory = product.getCategory();
+        if(data.categoryId() != null) {
+            newCategory = this.categoryRepository.findById(data.categoryId())
+                    .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+        }
+
+        product.setCategory(newCategory);
+
+        productRepository.save(product);
+
+        return toProductResponseDTO(product);
+    }
+
 }

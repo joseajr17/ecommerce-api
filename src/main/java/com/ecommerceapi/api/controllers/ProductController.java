@@ -33,7 +33,6 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<ProductResponseDTO> getProductDetails(@PathVariable UUID productId) {
         ProductResponseDTO productDetails = this.productService.getProductDetails(productId);
-
         return ResponseEntity.ok(productDetails);
     }
 
@@ -45,7 +44,13 @@ public class ProductController {
                                                                    @RequestParam(required = false) Integer minStock,
                                                                    @RequestParam(required = false) Integer maxStock) {
         List<ProductResponseDTO> products = this.productService.getFilteredProducts(name, minPrice, maxPrice, categoryName, minStock, maxStock);
-
         return ResponseEntity.ok(products);
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable UUID productId, @RequestBody ProductRequestDTO body) {
+        ProductResponseDTO productUpdated = this.productService.updateProduct(productId, body);
+        return ResponseEntity.ok(productUpdated);
+
     }
 }
