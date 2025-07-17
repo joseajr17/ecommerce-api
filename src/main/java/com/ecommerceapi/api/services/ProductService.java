@@ -10,6 +10,7 @@ import com.ecommerceapi.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,6 +64,14 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
         return toProductResponseDTO(product);
+    }
+
+    public List<ProductResponseDTO> getFilteredProducts(String name, BigDecimal minPrice, BigDecimal maxPrice, String categoryName, Integer minStock, Integer maxStock) {
+        if (name != null && name.trim().isEmpty()) name = null;
+        if (categoryName != null && categoryName.trim().isEmpty()) categoryName = null;
+
+        List<Product> filtered = productRepository.findFilteredProducts(name, minPrice, maxPrice, minStock, maxStock, categoryName);
+        return filtered.stream().map(this::toProductResponseDTO).toList();
     }
 
 }

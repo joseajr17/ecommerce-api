@@ -1,6 +1,5 @@
 package com.ecommerceapi.api.controllers;
 
-import com.ecommerceapi.api.domain.product.Product;
 import com.ecommerceapi.api.domain.product.ProductRequestDTO;
 import com.ecommerceapi.api.domain.product.ProductResponseDTO;
 import com.ecommerceapi.api.services.ProductService;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +35,17 @@ public class ProductController {
         ProductResponseDTO productDetails = this.productService.getProductDetails(productId);
 
         return ResponseEntity.ok(productDetails);
+    }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<ProductResponseDTO>> searchProducts(@RequestParam(required = false) String name,
+                                                                   @RequestParam(required = false) BigDecimal minPrice,
+                                                                   @RequestParam(required = false) BigDecimal maxPrice,
+                                                                   @RequestParam(required = false) String categoryName,
+                                                                   @RequestParam(required = false) Integer minStock,
+                                                                   @RequestParam(required = false) Integer maxStock) {
+        List<ProductResponseDTO> products = this.productService.getFilteredProducts(name, minPrice, maxPrice, categoryName, minStock, maxStock);
+
+        return ResponseEntity.ok(products);
     }
 }
