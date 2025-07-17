@@ -1,8 +1,11 @@
 package com.ecommerceapi.api.services;
 
+import com.ecommerceapi.api.domain.category.Category;
+import com.ecommerceapi.api.domain.category.CategoryResponseDTO;
 import com.ecommerceapi.api.domain.product.Product;
 import com.ecommerceapi.api.domain.product.ProductRequestDTO;
 import com.ecommerceapi.api.domain.product.ProductResponseDTO;
+import com.ecommerceapi.api.repositories.CategoryRepository;
 import com.ecommerceapi.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +17,35 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Product createProduct(ProductRequestDTO data) {
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    public ProductResponseDTO createProduct(ProductRequestDTO data) {
+        // Buscar categoria passada no JSON
+        Category category = this.categoryRepository.findById(data.categoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+
         Product newProduct = new Product();
         newProduct.setName(data.name());
         newProduct.setDescription(data.description());
         newProduct.setPrice(data.price());
-        newProduct.setCategory(data.category());
+        newProduct.setCategory(category);
         newProduct.setStock(data.stock());
 
         productRepository.save(newProduct);
 
-        return newProduct;
+        return toProductResponseDTO(newProduct);
+    }
+
+    private ProductResponseDTO toProductResponseDTO(Product product) {
+        return new ProductResponseDTO(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                new CategoryResponseDTO(product.getCategory().getId(), product.getCategory().getName()),
+                product.getStock()
+        );
     }
 
     public List<ProductResponseDTO> getProducts() {
@@ -32,7 +53,7 @@ public class ProductService {
 
         // Mapear cada entidade Product para ProductResponseDTO
         return products.stream()
-                .map(product -> new ProductResponseDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getCategory(), product.getStock()))
+                .map(this::toProductResponseDTO)
                 .toList();
     }
 
