@@ -26,4 +26,8 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
                                         @Param("maxStock") Integer maxStock,
                                         @Param("categoryName") String categoryName
     );
+
+    @Query("SELECT p FROM Product p WHERE LOWER(p.name) = LOWER(:name)")
+    List<Product> findByName(@Param("name") String name);
+
 }

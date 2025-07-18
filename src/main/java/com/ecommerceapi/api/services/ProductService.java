@@ -23,6 +23,9 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     public ProductResponseDTO createProduct(ProductRequestDTO data) {
+
+        validateProductData(data);
+
         // Buscar categoria passada no JSON
         Category category = this.categoryRepository.findById(data.categoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
@@ -48,17 +51,6 @@ public class ProductService {
                 .toList();
     }
 
-    private ProductResponseDTO toProductResponseDTO(Product product) {
-        return new ProductResponseDTO(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                new CategoryResponseDTO(product.getCategory().getId(), product.getCategory().getName()),
-                product.getStock()
-        );
-    }
-
     public ProductResponseDTO getProductDetails(UUID productId) {
         Product product = this.productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
@@ -75,8 +67,11 @@ public class ProductService {
     }
 
     public ProductResponseDTO updateProduct(UUID productId, ProductRequestDTO data) {
+
         Product product = this.productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+        validateProductData(data);
 
         product.setName(data.name() == null ? product.getName() : data.name());
         product.setDescription(data.description() == null ? product.getDescription() : data.description());
@@ -95,6 +90,39 @@ public class ProductService {
         productRepository.save(product);
 
         return toProductResponseDTO(product);
+    }
+
+    private ProductResponseDTO toProductResponseDTO(Product product) {
+        return new ProductResponseDTO(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                new CategoryResponseDTO(product.getCategory().getId(), product.getCategory().getName()),
+                product.getStock()
+        );
+    }
+
+    private boolean productNameExists(String name) {
+        return !productRepository.findByName(name).isEmpty();
+    }
+
+    private void validateProductData(ProductRequestDTO data) {
+        if (productNameExists(data.name())) {
+            throw new IllegalArgumentException("Product with this name already exists.");
+        }
+
+        if (data.price() == null || data.price().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Price must be greater than zero.");
+        }
+
+        if (data.stock() != null && data.stock() < 0) {
+            throw new IllegalArgumentException("Stock quantity cannot be negative.");
+        }
+
+        if (data.categoryId() == null) {
+            throw new IllegalArgumentException("Product must be associated with a category.");
+        }
     }
 
     public void deleteProduct(UUID productId) {
