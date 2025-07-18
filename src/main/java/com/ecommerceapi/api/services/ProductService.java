@@ -90,12 +90,17 @@ public class ProductService {
             newCategory = this.categoryRepository.findById(data.categoryId())
                     .orElseThrow(() -> new IllegalArgumentException("Category not found"));
         }
-
         product.setCategory(newCategory);
 
         productRepository.save(product);
 
         return toProductResponseDTO(product);
+    }
+
+    public void deleteProduct(UUID productId) {
+        Product product = this.productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        productRepository.delete(product);
     }
 
 }

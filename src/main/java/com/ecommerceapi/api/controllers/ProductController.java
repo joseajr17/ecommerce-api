@@ -51,6 +51,11 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable UUID productId, @RequestBody ProductRequestDTO body) {
         ProductResponseDTO productUpdated = this.productService.updateProduct(productId, body);
         return ResponseEntity.ok(productUpdated);
+    }
 
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId) {
+        this.productService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
     }
 }
