@@ -5,6 +5,7 @@ import com.ecommerceapi.api.domain.cart.Cart;
 import com.ecommerceapi.api.domain.cart.CartResponseDTO;
 import com.ecommerceapi.api.domain.cartItem.CartItem;
 import com.ecommerceapi.api.domain.cartItem.CartItemResponseDTO;
+import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.domain.product.Product;
 import com.ecommerceapi.api.domain.user.User;
 import com.ecommerceapi.api.repositories.*;
@@ -73,8 +74,28 @@ public class CartService {
                     newCart.setUser(new User(userId));
                     return cartRepository.save(newCart);
                 });
-
         return toCartResponseDTO(cart);
+    }
+
+    public CartResponseDTO updateItemQuantity(UUID cartItemId, UpdateItemRequestDTO data) {
+        if(data.quantity() <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+
+        CartItem cartItem = this.cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        Product product = cartItem.getProduct();
+
+        if(product.getStock() < data.quantity()) {
+            throw new IllegalArgumentException("Insufficient stock");
+        }
+
+        cartItem.setQuantity(data.quantity());
+
+        cartItemRepository.save(cartItem);
+
+        return toCartResponseDTO(cartItem.getCart());
     }
 
     private CartResponseDTO toCartResponseDTO(Cart cart) {

@@ -2,6 +2,7 @@ package com.ecommerceapi.api.controllers;
 
 import com.ecommerceapi.api.domain.cart.AddToCartRequestDTO;
 import com.ecommerceapi.api.domain.cart.CartResponseDTO;
+import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class CartController {
     @GetMapping("/get")
     public ResponseEntity<CartResponseDTO> getCart(@RequestParam UUID userId) {
         return ResponseEntity.ok(cartService.getCart(userId));
+    }
+
+    @PutMapping("/items/{cartItemId}")
+    public ResponseEntity<CartResponseDTO> updateItemQuantity(@PathVariable UUID cartItemId, @RequestBody UpdateItemRequestDTO body) {
+        return ResponseEntity.ok(cartService.updateItemQuantity(cartItemId, body));
     }
 
 
