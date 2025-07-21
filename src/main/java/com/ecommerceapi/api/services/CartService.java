@@ -29,7 +29,7 @@ public class CartService {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-    public CartResponseDTO addToCart(UUID userId, AddToCartRequestDTO data) {
+    public CartResponseDTO addProductToCart(UUID userId, AddToCartRequestDTO data) {
         if (data.quantity() <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         }
@@ -41,7 +41,7 @@ public class CartService {
             throw new IllegalArgumentException("Insufficient stock");
         }
 
-        // Criar carrinho caso o usuário não tenha um
+        // Criar um carrinho vazio caso o usuário não tenha um
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseGet(()-> {
                     Cart newCart = new Cart();
@@ -61,6 +61,18 @@ public class CartService {
 
         cartItem.setQuantity(cartItem.getQuantity() + data.quantity());
         cartItemRepository.save(cartItem);
+
+        return toCartResponseDTO(cart);
+    }
+
+    public CartResponseDTO getCart(UUID userId) {
+        // Criar um carrinho vazio caso o usuário não tenha um
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseGet(()-> {
+                    Cart newCart = new Cart();
+                    newCart.setUser(new User(userId));
+                    return cartRepository.save(newCart);
+                });
 
         return toCartResponseDTO(cart);
     }

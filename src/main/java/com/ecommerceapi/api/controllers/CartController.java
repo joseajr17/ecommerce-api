@@ -20,7 +20,14 @@ public class CartController {
     // Autenticação: O userId está sendo passado como @RequestParam para simplicidade. Em um sistema com autenticação (ex.: Spring Security), obtenha o userId do contexto de segurança
     // UUID userId = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
     @PostMapping("/add")
-    public ResponseEntity<CartResponseDTO> addToCart(@RequestParam UUID userId, @RequestBody AddToCartRequestDTO data) {
-        return ResponseEntity.ok(cartService.addToCart(userId, data));
+    public ResponseEntity<CartResponseDTO> addProductToCart(@RequestParam UUID userId, @RequestBody AddToCartRequestDTO data) {
+        return ResponseEntity.ok(cartService.addProductToCart(userId, data));
     }
+
+    @GetMapping("/get")
+    public ResponseEntity<CartResponseDTO> getCart(@RequestParam UUID userId) {
+        return ResponseEntity.ok(cartService.getCart(userId));
+    }
+
+
 }

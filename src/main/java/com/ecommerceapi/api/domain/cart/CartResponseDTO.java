@@ -6,11 +6,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-public record CartResponseDTO(
-        UUID id,
-        UUID userId,
-        List<CartItemResponseDTO> items,
-        BigDecimal total
-) {}
+public record CartResponseDTO(UUID id, UUID userId, List<CartItemResponseDTO> items, BigDecimal total) {}
 
 
