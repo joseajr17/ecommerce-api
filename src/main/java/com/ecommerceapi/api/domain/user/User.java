@@ -35,4 +35,8 @@ public class User {
     // Um usuário pode ter vários pedidos
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orders;
+
+    public User(UUID userId) {
+        this.id = userId;
+    }
 }
