@@ -2,6 +2,7 @@ package com.ecommerceapi.api.controllers;
 
 import com.ecommerceapi.api.domain.cart.AddToCartRequestDTO;
 import com.ecommerceapi.api.domain.cart.CartResponseDTO;
+import com.ecommerceapi.api.domain.cartItem.CartItem;
 import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,14 @@ public class CartController {
         return ResponseEntity.noContent().build();
     }
 
-    
+    @DeleteMapping
+    public ResponseEntity<CartItem> clearCart(@RequestParam UUID userId) {
+        cartService.clearCart(userId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }

@@ -9,10 +9,12 @@ import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.domain.product.Product;
 import com.ecommerceapi.api.domain.user.User;
 import com.ecommerceapi.api.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -103,8 +105,14 @@ public class CartService {
                 .orElseThrow(() -> new IllegalArgumentException("Item not found"));
 
         this.cartItemRepository.delete(cartItem);
+    }
 
+    @Transactional
+    public void clearCart(UUID userId) {
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
 
+        cartItemRepository.deleteByCartId(cart.getId());
     }
 
     private CartResponseDTO toCartResponseDTO(Cart cart) {
