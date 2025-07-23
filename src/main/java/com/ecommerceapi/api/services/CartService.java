@@ -98,6 +98,15 @@ public class CartService {
         return toCartResponseDTO(cartItem.getCart());
     }
 
+    public void removeItemFromCart(UUID cartItemId) {
+        CartItem cartItem = this.cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        this.cartItemRepository.delete(cartItem);
+
+
+    }
+
     private CartResponseDTO toCartResponseDTO(Cart cart) {
         BigDecimal total = cart.getCartItems().stream()
                 .map(item -> item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))

@@ -17,7 +17,6 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-
     // Autenticação: O userId está sendo passado como @RequestParam para simplicidade. Em um sistema com autenticação (ex.: Spring Security), obtenha o userId do contexto de segurança
     // UUID userId = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
     @PostMapping("/add")
@@ -34,6 +33,15 @@ public class CartController {
     public ResponseEntity<CartResponseDTO> updateItemQuantity(@PathVariable UUID cartItemId, @RequestBody UpdateItemRequestDTO body) {
         return ResponseEntity.ok(cartService.updateItemQuantity(cartItemId, body));
     }
+
+    @DeleteMapping("/items/{cartItemId}")
+    public ResponseEntity<Void> removeItemFromCart(@PathVariable UUID cartItemId) {
+        cartService.removeItemFromCart(cartItemId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    
 
 
 }
