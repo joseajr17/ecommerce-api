@@ -26,4 +26,9 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDTO>> getUserOrders(@RequestParam UUID userId) {
         return ResponseEntity.ok(orderService.getUserOrders(userId));
     }
+
+    @GetMapping("/admin")
+    public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
 }
