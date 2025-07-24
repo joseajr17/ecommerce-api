@@ -3,6 +3,7 @@ package com.ecommerceapi.api.controllers;
 import com.ecommerceapi.api.domain.order.Order;
 import com.ecommerceapi.api.domain.order.OrderResponseDTO;
 import com.ecommerceapi.api.services.OrderService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +28,15 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getUserOrders(userId));
     }
 
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDTO> getOrderDetails(@PathVariable UUID orderId) {
+        return ResponseEntity.ok(orderService.getOrderDetails(orderId));
+    }
+
     @GetMapping("/admin")
     public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
+
+
 }

@@ -124,16 +124,21 @@ public class OrderService {
         return payment;
     }
 
-
-
-    public List<OrderResponseDTO> getAllOrders() {
-        return orderRepository.findAll().stream()
+    public List<OrderResponseDTO> getUserOrders(UUID userId) {
+        return orderRepository.findByUserId(userId).stream()
                 .map(this::toOrderResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<OrderResponseDTO> getUserOrders(UUID userId) {
-        return orderRepository.findByUserId(userId).stream()
+    public OrderResponseDTO getOrderDetails(UUID orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+
+        return toOrderResponseDTO(order);
+    }
+
+    public List<OrderResponseDTO> getAllOrders() {
+        return orderRepository.findAll().stream()
                 .map(this::toOrderResponseDTO)
                 .collect(Collectors.toList());
     }
