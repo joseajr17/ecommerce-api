@@ -41,6 +41,8 @@ public class OrderService {
 
     @Transactional
     public OrderResponseDTO checkout(UUID userId) {
+
+        // Verifica se o carrinho do usuário tem itens.
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
 
@@ -49,8 +51,10 @@ public class OrderService {
           throw new IllegalArgumentException("Cart's empty");
         }
 
+        // Cria um Order com status PENDING e createdAt.
         Order order = createOrder(userId);
 
+        // Converte CartItem em OrderItem, salvando o preço do produto como unitPrice e atualiza o estoque dos produtos.
         List<OrderItem> orderItems = createOrderItems(cartItems, order);
 
         // Calcular totalAmount
@@ -63,19 +67,20 @@ public class OrderService {
 
         orderRepository.save(order);
 
+        // Cria um Payment com status COMPLETED.
         Payment payment = createPayment(order, totalAmount);
 
+        // Define o status do pedido como PAID
         order.setStatus("PAID");
         orderRepository.save(order);
 
         // Limpar carrinho
         cartItemRepository.deleteByCartId(cart.getId());
 
-        return toOrderResponseDTO(order, payment);
-
+        return toOrderResponseDTO(order);
     }
 
-    // Criar Order
+    // Cria um Order com status PENDING e createdAt.
     private Order createOrder(UUID userId) {
         Order order = new Order();
         order.setUser(new User(userId));
@@ -119,8 +124,8 @@ public class OrderService {
         return payment;
     }
 
-    private OrderResponseDTO toOrderResponseDTO(Order order, Payment payment) {
-        // Payment payment = paymentRepository.findByOrderId(order.getId()).orElse(null);
+    private OrderResponseDTO toOrderResponseDTO(Order order) {
+        Payment payment = paymentRepository.findByOrderId(order.getId()).orElse(null);
         return new OrderResponseDTO(
                 order.getId(),
                 order.getTotalAmount(),
