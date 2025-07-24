@@ -124,6 +124,12 @@ public class OrderService {
         return payment;
     }
 
+    public List<OrderResponseDTO> getUserOrders(UUID userId) {
+        return orderRepository.findByUserId(userId).stream()
+                .map(this::toOrderResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     private OrderResponseDTO toOrderResponseDTO(Order order) {
         Payment payment = paymentRepository.findByOrderId(order.getId()).orElse(null);
         return new OrderResponseDTO(
