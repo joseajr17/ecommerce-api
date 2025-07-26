@@ -2,8 +2,10 @@ package com.ecommerceapi.api.services;
 
 import com.ecommerceapi.api.domain.cart.Cart;
 import com.ecommerceapi.api.domain.cartItem.CartItem;
+import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.domain.order.Order;
 import com.ecommerceapi.api.domain.order.OrderResponseDTO;
+import com.ecommerceapi.api.domain.order.OrderStatusRequestDTO;
 import com.ecommerceapi.api.domain.orderItem.OrderItem;
 import com.ecommerceapi.api.domain.orderItem.OrderItemResponseDTO;
 import com.ecommerceapi.api.domain.payment.Payment;
@@ -142,6 +144,23 @@ public class OrderService {
                 .map(this::toOrderResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    public OrderResponseDTO updateOrderStatus(UUID orderId, OrderStatusRequestDTO data) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+
+        String status = data.status().toUpperCase();
+        if (!List.of("PENDING", "PAID", "SHIPPED", "DELIVERED", "FAILED").contains(status)) {
+            throw new IllegalArgumentException("Invalid status: " + status);
+        }
+        order.setStatus(status);
+
+        orderRepository.save(order);
+
+        return toOrderResponseDTO(order);
+    }
+
+
 
     public PaymentResponseDTO getPaymentByOrderId(UUID orderId) {
         Payment payment = paymentRepository.findByOrderId(orderId)

@@ -2,6 +2,7 @@ package com.ecommerceapi.api.controllers;
 
 import com.ecommerceapi.api.domain.order.Order;
 import com.ecommerceapi.api.domain.order.OrderResponseDTO;
+import com.ecommerceapi.api.domain.order.OrderStatusRequestDTO;
 import com.ecommerceapi.api.domain.payment.PaymentResponseDTO;
 import com.ecommerceapi.api.services.OrderService;
 import jakarta.websocket.server.PathParam;
@@ -38,6 +39,12 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
+
+    @PutMapping("/admin/{orderId}")
+    public ResponseEntity<OrderResponseDTO> updateOrderStatus(@PathVariable UUID orderId, @RequestBody OrderStatusRequestDTO body) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(orderId, body));
+    }
+
 
     @GetMapping("/payment/{orderId}")
     public ResponseEntity<PaymentResponseDTO> getPaymentByOrderId(@PathVariable UUID orderId) {
