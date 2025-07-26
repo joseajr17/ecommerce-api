@@ -143,6 +143,22 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    public PaymentResponseDTO getPaymentByOrderId(UUID orderId) {
+        Payment payment = paymentRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
+
+        return toPaymentResponseDTO(payment);
+    }
+
+    private PaymentResponseDTO toPaymentResponseDTO(Payment payment) {
+        return new PaymentResponseDTO(
+                payment.getId(),
+                payment.getAmount(),
+                payment.getStatus(),
+                payment.getPaymentDate()
+        );
+    }
+
     private OrderResponseDTO toOrderResponseDTO(Order order) {
         Payment payment = paymentRepository.findByOrderId(order.getId()).orElse(null);
         return new OrderResponseDTO(
