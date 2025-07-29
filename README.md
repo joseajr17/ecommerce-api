@@ -4,20 +4,19 @@ Uma API RESTful para uma plataforma de comércio eletrônico, desenvolvida em Ja
 # Índice
 
 - [Visão geral](#visao-geral)
-- [Funcionalidades](#features)
-- [Tecnologias utilizadas](#installation)
-- [Modelo de Dados](#installation)
-- [Endpoints da API](#installation)
-- [Instalação](#installation)
-- [Configuração](#configuration)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias utilizadas](#tecnologias)
+- [Modelo de Dados](#modelo)
+- [Instalação](#instalacao)
+- [Configuração](#config)
 - [Endpoints da API](#endpoints)
 
-## Visão geral
+## Visão geral <a id="visao-geral"></a>
 
 Este projeto é uma API backend para uma aplicação de e-commerce. Ele fornece endpoints para gerenciar produtos, para fazer a autenticação de usuários, para gerenciar os carrinhos de compras e para controlar os pedidos e seus pagamentos. 
 A API é projetada para ser escalável e segura, utilizando Spring Boot para facilitar o desenvolvimento e a manutenção.
 
-## Funcionalidades
+## Funcionalidades <a id="funcionalidades"></a>
 
 <ul>
   <li>Autenticação e autorização de usuários, utilizando o JWT com Spring Security</li>
@@ -27,7 +26,7 @@ A API é projetada para ser escalável e segura, utilizando Spring Boot para fac
   <li>Design de API RESTful com respostas em JSON</li>
 </ul>
 
-## Tecnologias usadas
+## Tecnologias usadas <a id="tecnologias"></a>
 
 <ul>
   <li>Java 21</li>
@@ -39,12 +38,12 @@ A API é projetada para ser escalável e segura, utilizando Spring Boot para fac
   <li>Maven (gerenciamento de dependências)</li>
 </ul>
 
-## Modelo de Dados
+## Modelo de Dados <a id="modelo"></a>
 Modelo de dados usando o diagrama entidade-relacionamento (ERD) com as principais entidades e seus relacionamentos:
 
-<img width="1025" height="1061" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
+<img width="525" height="561" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
 
-## Instalação
+## Instalação <a id="instalacao"></a>
 
 
 <ol>
@@ -70,7 +69,7 @@ Modelo de dados usando o diagrama entidade-relacionamento (ERD) com as principai
   </li>
 </ol>
 
-## Configuração
+## Configuração <a id="config"></a>
 Crie um arquivo application.properties ou application.yml no diretório src/main/resources e adicione as seguintes configurações. 
 ```
 # Configuração para PostgreSQL (produção)
@@ -83,7 +82,7 @@ jwt.secret=sua_chave_secreta_jwt
 ```
 **Nota**: Certifique-se de que o PostgreSQL esteja em execução e que o banco de dados ecommercedb tenha sido criado antes de iniciar a aplicação.
 
-## Endpoints da API
+## Endpoints da API <a id="endpoints"></a>
 
 ### Autenticação
 
