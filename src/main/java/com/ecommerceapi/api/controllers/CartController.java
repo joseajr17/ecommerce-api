@@ -4,9 +4,13 @@ import com.ecommerceapi.api.domain.cart.AddToCartRequestDTO;
 import com.ecommerceapi.api.domain.cart.CartResponseDTO;
 import com.ecommerceapi.api.domain.cartItem.CartItem;
 import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
+import com.ecommerceapi.api.repositories.UserRepository;
 import com.ecommerceapi.api.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -18,15 +22,26 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    // Autenticação: O userId está sendo passado como @RequestParam para simplicidade. Em um sistema com autenticação (ex.: Spring Security), obtenha o userId do contexto de segurança
-    // UUID userId = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("/add")
-    public ResponseEntity<CartResponseDTO> addProductToCart(@RequestParam UUID userId, @RequestBody AddToCartRequestDTO data) {
+    public ResponseEntity<CartResponseDTO> addProductToCart(@AuthenticationPrincipal UserDetails userDetails, @RequestBody AddToCartRequestDTO data) {
+        String userEmail = userDetails.getUsername();
+
+        UUID userId = userRepository.findUserIdByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         return ResponseEntity.ok(cartService.addProductToCart(userId, data));
     }
 
     @GetMapping("/get")
-    public ResponseEntity<CartResponseDTO> getCart(@RequestParam UUID userId) {
+    public ResponseEntity<CartResponseDTO> getCart(@AuthenticationPrincipal UserDetails userDetails) {
+        String userEmail = userDetails.getUsername();
+
+        UUID userId = userRepository.findUserIdByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         return ResponseEntity.ok(cartService.getCart(userId));
     }
 
@@ -43,7 +58,12 @@ public class CartController {
     }
 
     @DeleteMapping
-    public ResponseEntity<CartItem> clearCart(@RequestParam UUID userId) {
+    public ResponseEntity<CartItem> clearCart(@AuthenticationPrincipal UserDetails userDetails) {
+        String userEmail = userDetails.getUsername();
+
+        UUID userId = this.userRepository.findUserIdByEmail(userEmail)
+                        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         cartService.clearCart(userId);
 
         return ResponseEntity.noContent().build();
