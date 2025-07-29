@@ -41,7 +41,7 @@ A API é projetada para ser escalável e segura, utilizando Spring Boot para fac
 ## Modelo de Dados <a id="modelo"></a>
 Modelo de dados usando o diagrama entidade-relacionamento (ERD) com as principais entidades e seus relacionamentos:
 
-<img width="525" height="561" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
+<img width="725" height="761" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
 
 ## Instalação <a id="instalacao"></a>
 
