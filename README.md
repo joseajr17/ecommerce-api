@@ -3,7 +3,7 @@ Uma API RESTful para uma plataforma de comércio eletrônico, desenvolvida em Ja
 
 # Índice
 
-- [Visão geral](#overview)
+- [Visão geral](#visao-geral)
 - [Funcionalidades](#features)
 - [Tecnologias utilizadas](#installation)
 - [Modelo de Dados](#installation)
@@ -42,9 +42,7 @@ A API é projetada para ser escalável e segura, utilizando Spring Boot para fac
 ## Modelo de Dados
 Modelo de dados usando o diagrama entidade-relacionamento (ERD) com as principais entidades e seus relacionamentos:
 
-
-<img width="1025" height="1061" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/5550a766-98bb-4fd5-9370-8527f16e5144" />
-
+<img width="1025" height="1061" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
 
 ## Instalação
 
