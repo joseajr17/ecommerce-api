@@ -1,10 +1,15 @@
+# Arquivo de ajuda do Spring
 HELP.md
+
+# Build do Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
+
+# Evita inclusão dos targets internos das fontes
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### STS (Spring Tool Suite) ###
 .apt_generated
 .classpath
 .factorypath
@@ -25,9 +30,24 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# Build do Gradle (caso use)
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
+
+# Logs
+*.log
+logs/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração sensíveis
+src/main/resources/application.properties
+src/main/resources/application.yml
+.env
