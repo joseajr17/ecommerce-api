@@ -38,6 +38,8 @@ public class AuthenticationService {
     }
 
     public String login(AuthenticationDTO body) {
+        // System.out.println(new BCryptPasswordEncoder().encode("admin123"));
+
         // pegar os dados do user
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.email(), body.password());
         // autenticar o user

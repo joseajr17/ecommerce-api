@@ -1,12 +1,10 @@
 package com.ecommerceapi.api.controllers;
 
-import com.ecommerceapi.api.domain.order.Order;
 import com.ecommerceapi.api.domain.order.OrderResponseDTO;
 import com.ecommerceapi.api.domain.order.OrderStatusRequestDTO;
 import com.ecommerceapi.api.domain.payment.PaymentResponseDTO;
 import com.ecommerceapi.api.repositories.UserRepository;
 import com.ecommerceapi.api.services.OrderService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -64,6 +62,5 @@ public class OrderController {
     @GetMapping("/payment/{orderId}")
     public ResponseEntity<PaymentResponseDTO> getPaymentByOrderId(@PathVariable UUID orderId) {
         return ResponseEntity.ok(orderService.getPaymentByOrderId(orderId));
-
     }
 }

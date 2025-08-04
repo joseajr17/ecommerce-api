@@ -2,7 +2,6 @@ package com.ecommerceapi.api.services;
 
 import com.ecommerceapi.api.domain.cart.Cart;
 import com.ecommerceapi.api.domain.cartItem.CartItem;
-import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.domain.order.Order;
 import com.ecommerceapi.api.domain.order.OrderResponseDTO;
 import com.ecommerceapi.api.domain.order.OrderStatusRequestDTO;

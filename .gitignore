@@ -48,6 +48,4 @@ logs/
 Thumbs.db
 
 # Arquivos de configuração sensíveis
-src/main/resources/application.properties
-src/main/resources/application.yml
 .env
