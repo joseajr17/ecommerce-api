@@ -2,49 +2,29 @@
 
 API REST para um sistema de e-commerce desenvolvida com Spring Boot. A aplicação permite o gerenciamento de usuários, autenticação via JWT, carrinhos de compras, produtos e pedidos.
 
----
+## 🚀 Funcionalidades 
 
-# Índice
+- ✅ **Autenticação e autorização**: Registro e login de usuários com tokens JWT usando Spring Security.
+- ✅ **Painel administrativo**: Endpoints para gerenciar produtos, categorias e pedidos
+- ✅ **Carrinho de compras**: Endpoints para adicionar, atualizar, remover itens e limpar o carrinho. Além do endpoint para fazer checkout do carrinho
 
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias utilizadas](#tecnologias)
-- [Modelo de Dados](#modelo)
-- [Pré-requisitos](#pre-requisitos)
-- [Como executar](#como-executar)
-- [Endpoints da API](#endpoints)
+## 🛠️ Tecnologias usadas 
 
-## Funcionalidades <a id="funcionalidades"></a>
+- **Java 21** - Linguagem principal
+- **Spring Boot** - Framework base
+- **Spring Data JPA** - Persistência
+- **Spring Security** - Segurança
+- **Lombok** - Redução de boilerplate
+- **PostgreSQL 16** - Banco de dados
+- **Flyway** - Migrações de banco de dados
+- **Maven**: Gerenciamento de dependências
+- **Docker e Docker Compose** - Containerização da aplicação 
 
-- **Autenticação e autorização**: Registro e login de usuários com tokens JWT usando Spring Security.
-- **Gerenciamento de produtos e categorias**: Operações CRUD (criar, ler, atualizar, excluir) para produtos e categorias no catálogo.
-- **Carrinho de compras**: Adicionar, atualizar, remover itens e limpar o carrinho.
-- **Gestão de pedidos**: Criar, listar, rastrear e atualizar o status de pedidos.
-
-## Tecnologias usadas <a id="tecnologias"></a>
-
-- Java 21
-- Spring Boot
-- Spring Security com JWT
-- PostgreSQL 16
-- Flyway para migrações de banco de dados
-- Docker e Docker Compose
-
-## Modelo de Dados <a id="modelo"></a>
-
-O sistema utiliza as seguintes entidades principais:
-- **User**: Representa os usuários da plataforma (clientes e administradores).
-- **Product**: Itens disponíveis no catálogo, associados a categorias.
-- **Category**: Categorias para organizar produtos.
-- **Cart**: Carrinho de compras de um usuário, contendo itens.
-- **CartItem**: Itens específicos no carrinho, com quantidade e produto.
-- **Order**: Pedidos realizados, vinculados a um usuário e itens.
-- **OrderItem**: Itens específicos de um pedido.
-
-Diagrama Entidade-Relacionamento (ERD):
+## Modelo de Dados - Diagrama Entidade-Relacionamento (ERD):
 
 <img width="725" height="761" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
 
-## Pré-requisitos<a id="pre-requisitos"></a>
+## Pré-requisitos
 
 Para executar a aplicação, você precisa de:
 - Java 21 (JDK instalado e configurado).
@@ -53,7 +33,7 @@ Para executar a aplicação, você precisa de:
 - Docker e Docker Compose (opcional, para execução em contêineres).
 - Ferramenta para testar APIs (ex.: Postman ou Insomnia).
 
-## Como executar <a id="como-executar"></a>
+## Como executar 
 
 ### Opção 1: Usando Docker Compose
 1. Clone o repositório
@@ -79,50 +59,73 @@ A API estará disponível em: http://localhost:8080
   - Execute a classe principal (ex.: ApiApplication).
 
 
-## Endpoints da API <a id="endpoints"></a>
+## 🚦 Endpoints
 
-### Autenticação
+### APIs públicas 
+```http
+# Registrar um novo usuário
+POST /auth/register
 
-| Método | Endpoint           | Descrição                               |
-|--------|--------------------|-----------------------------------------|
-| POST   | `/api/auth/register` | Registrar um novo usuário               |
-| POST   | `/api/auth/login`    | Autenticar um usuário e obter token JWT |
+# Autenticar um usuário e obter token JWT 
+POST /auth/login
 
-### Categorias (Admin)
+# Listar todos os produtos 
+GET /public/products
 
-| Método | Endpoint           | Descrição                               |
-|--------|--------------------|-----------------------------------------|
-| POST e GET  | `/api/admin/category` | Gerenciar categorias              |
+# Obter detalhes de um produto específico
+GET /public/products/{productId}
 
-### Produtos
+# Filtrar produtos (ex.: por categoria, preço, etc.)
+GET /public/products/filter
 
-| Método | Endpoint           | Descrição                               |
-|--------|--------------------|-----------------------------------------|
-| GET  | `/api/products` | Listar todos os produtos                      |
-| GET  | `/api/products/{productId}` | Obter detalhes de um produto específico |
-| GET  | `/api/products/filter` | Filtrar produtos (ex.: por categoria, preço, etc.) |
-| POST  | `/api/admin/products` | Criar um novo produto (admin)              |
-| PUT  | `/api/admin/products` | Atualizar um produto (admin)             |
-| DELETE  | `/api/admin/products/{productId}` | Excluir um produto (admin)             |
+# Adicionar item ao carrinho 
+POST /public/cart/add
 
-### Carrinho
+# Obter itens do carrinho
+GET /public/cart/get
 
-| Método  | Endpoint                         | Descrição                        |
-|---------|----------------------------------|----------------------------------|
-| POST    | `/api/cart/add`                 | Adicionar item ao carrinho       |
-| GET     | `/api/cart/get`                 | Obter itens do carrinho          |
-| PUT     | `/api/cart/items/{cartItemId}`  | Atualizar item do carrinho       |
-| DELETE  | `/api/cart/items/{cartItemId}`  | Remover item do carrinho         |
-| DELETE  | `/api/cart`                     | Limpar o carrinho                |
+# Atualizar item do carrinho
+PUT /public/cart/items/{cartItemId}
 
+# Remover item do carrinho
+DELETE /public/cart/items/{cartItemId}
 
-### Pedidos
+# Limpar o carrinho  
+DELETE /public/cart
 
-| Método  | Endpoint                                | Descrição                                      |
-|---------|------------------------------------------|------------------------------------------------|
-| POST    | `/api/orders/checkout`                  | Finalizar compra e criar pedido                |
-| GET     | `/api/orders`                           | Listar pedidos do usuário                      |
-| GET     | `/api/orders/{orderId}`                 | Obter detalhes de um pedido específico         |
-| GET     | `/api/admin/orders`                     | Listar todos os pedidos (admin)                |
-| PUT     | `/api/admin/orders/{orderId}`           | Atualizar status de um pedido (admin)                    |
-| GET     | `/api/payment/{orderId}`                | Obter informações de pagamento de um pedido    |
+# Finalizar compra e criar pedido 
+POST /orders/checkout
+
+# Listar pedidos do usuário
+GET /orders
+
+# Obter detalhes de um pedido específico
+GET /orders/{orderId}
+
+# Obter informações de pagamento de um pedido
+GET /payment/{orderId}
+```
+
+### APIs Administrativas (Autenticação Requerida)
+```http
+# Adicionar categoria
+GET /admin/category
+
+# Listar categorias
+POST /admin/category
+
+#  Adicionar novo produto
+POST /admin/products
+
+# Atualizar um produto
+PUT /admin/products
+
+# Excluir um produto
+DELETE /admin/products/{productId}
+
+# Listar todos os pedidos
+GET /admin/orders
+
+# Atualizar status de um pedido
+PUT /admin/orders/{orderId}
+```
