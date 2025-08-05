@@ -1,86 +1,83 @@
-# API de E-commerce
-Uma API RESTful para uma plataforma de comércio eletrônico, desenvolvida em Java com Spring Boot para gerenciar produtos, com autenticação de usuários e processamento de pedidos.
+# E-commerce com Spring Boot
+
+API REST para um sistema de e-commerce desenvolvida com Spring Boot. A aplicação permite o gerenciamento de usuários, autenticação via JWT, carrinhos de compras, produtos e pedidos.
+
+---
 
 # Índice
 
-- [Visão geral](#visao-geral)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias utilizadas](#tecnologias)
 - [Modelo de Dados](#modelo)
-- [Instalação](#instalacao)
-- [Configuração](#config)
+- [Pré-requisitos](#pre-requisitos)
+- [Como executar](#como-executar)
 - [Endpoints da API](#endpoints)
-
-## Visão geral <a id="visao-geral"></a>
-
-Este projeto é uma API backend para uma aplicação de e-commerce. Ele fornece endpoints para gerenciar produtos, para fazer a autenticação de usuários, para gerenciar os carrinhos de compras e para controlar os pedidos e seus pagamentos. 
-A API é projetada para ser escalável e segura, utilizando Spring Boot para facilitar o desenvolvimento e a manutenção.
 
 ## Funcionalidades <a id="funcionalidades"></a>
 
-<ul>
-  <li>Autenticação e autorização de usuários, utilizando o JWT com Spring Security</li>
-  <li>Gerenciamento do catálogo de produtos (operações CRUD)</li>
-  <li>Funcionalidades de carrinho de compras</li>
-  <li>Criação e rastreamento de pedidos</li>
-  <li>Design de API RESTful com respostas em JSON</li>
-</ul>
+- **Autenticação e autorização**: Registro e login de usuários com tokens JWT usando Spring Security.
+- **Gerenciamento de produtos e categorias**: Operações CRUD (criar, ler, atualizar, excluir) para produtos e categorias no catálogo.
+- **Carrinho de compras**: Adicionar, atualizar, remover itens e limpar o carrinho.
+- **Gestão de pedidos**: Criar, listar, rastrear e atualizar o status de pedidos.
 
 ## Tecnologias usadas <a id="tecnologias"></a>
 
-<ul>
-  <li>Java 21</li>
-  <li>Spring Boot (com Spring Web, Spring Data JPA, Spring Security)</li>
-  <li>PostgreSQL</li>
-  <li>Flyway 9.8.1 (para migrações de banco de dados)</li>
-  <li>Lombok (para redução de código boilerplate)</li>
-  <li>Java-JWT 4.5.0 (para autenticação baseada em JWT)</li>
-  <li>Maven (gerenciamento de dependências)</li>
-</ul>
+- Java 21
+- Spring Boot
+- Spring Security com JWT
+- PostgreSQL 16
+- Flyway para migrações de banco de dados
+- Docker e Docker Compose
 
 ## Modelo de Dados <a id="modelo"></a>
-Modelo de dados usando o diagrama entidade-relacionamento (ERD) com as principais entidades e seus relacionamentos:
+
+O sistema utiliza as seguintes entidades principais:
+- **User**: Representa os usuários da plataforma (clientes e administradores).
+- **Product**: Itens disponíveis no catálogo, associados a categorias.
+- **Category**: Categorias para organizar produtos.
+- **Cart**: Carrinho de compras de um usuário, contendo itens.
+- **CartItem**: Itens específicos no carrinho, com quantidade e produto.
+- **Order**: Pedidos realizados, vinculados a um usuário e itens.
+- **OrderItem**: Itens específicos de um pedido.
+
+Diagrama Entidade-Relacionamento (ERD):
 
 <img width="725" height="761" alt="ecommerce-diagram drawio" src="https://github.com/user-attachments/assets/2396dea6-ac1f-474b-ae16-627bed2f05f3" />
 
-## Instalação <a id="instalacao"></a>
+## Pré-requisitos<a id="pre-requisitos"></a>
 
+Para executar a aplicação, você precisa de:
+- Java 21 (JDK instalado e configurado).
+- Maven (para build local).
+- PostgreSQL 16 (instalado localmente ou via Docker).
+- Docker e Docker Compose (opcional, para execução em contêineres).
+- Ferramenta para testar APIs (ex.: Postman ou Insomnia).
 
-<ol>
-  <li>Clone o repositório:
-    
-  ```bash
-      git clone https://github.com/joseajr17/ecommerce-api.git
-      cd ecommerce-api
-  ```
-  </li>
-  <li>Instale as dependências:
-    
-  ```bash
-      mvn install
-  ```
-  </li>
-  <li>Configure as variáveis de ambiente (veja Configuração).</li>
-  <li>Inicie a aplicação:
-    
-  ```bash
-      mvn spring-boot:run
-  ```
-  </li>
-</ol>
+## Como executar <a id="como-executar"></a>
 
-## Configuração <a id="config"></a>
-Crie um arquivo application.properties ou application.yml no diretório src/main/resources e adicione as seguintes configurações. 
+### Opção 1: Usando Docker Compose
+1. Clone o repositório
+```bash
+git clone https://github.com/joseajr17/ecommerce-api.git
+cd ecommerce-api
 ```
-# Configuração para PostgreSQL (produção)
-spring.datasource.url=jdbc:postgresql://localhost:5432/ecommercedb
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
 
-# Configuração do JWT
-jwt.secret=sua_chave_secreta_jwt
+2. Crie o arquivo .env baseado no .env.example
+
+3. Suba a aplicação com Docker Compose
+```bash
+docker compose up --build
 ```
-**Nota**: Certifique-se de que o PostgreSQL esteja em execução e que o banco de dados ecommercedb tenha sido criado antes de iniciar a aplicação.
+A API estará disponível em: http://localhost:8080
+
+### Opção 2: Executando Localmente (sem Docker)
+1. Certifique-se de que o PostgreSQL está rodando localmente e crie o banco de dados
+2. Configure as credenciais no arquivo src/main/resources/application.properties:
+3. Execute a aplicação no IntelliJ:
+  - Abra o projeto no IntelliJ IDEA.
+  - Configure o JDK 21 em File > Project Structure > SDKs.
+  - Execute a classe principal (ex.: ApiApplication).
+
 
 ## Endpoints da API <a id="endpoints"></a>
 
@@ -105,7 +102,7 @@ jwt.secret=sua_chave_secreta_jwt
 | GET  | `/api/products/{productId}` | Obter detalhes de um produto específico |
 | GET  | `/api/products/filter` | Filtrar produtos (ex.: por categoria, preço, etc.) |
 | POST  | `/api/admin/products` | Criar um novo produto (admin)              |
-| PUT  | `/api/admin/category` | Atualizar um produto (admin)             |
+| PUT  | `/api/admin/products` | Atualizar um produto (admin)             |
 | DELETE  | `/api/admin/products/{productId}` | Excluir um produto (admin)             |
 
 ### Carrinho
