@@ -1,4 +1,4 @@
-package com.ecommerceapi.api.domain.cartItem;
+package com.ecommerceapi.api.dtos.cartItem;
 
 import java.math.BigDecimal;
 import java.util.UUID;

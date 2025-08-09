@@ -1,4 +1,4 @@
-package com.ecommerceapi.api.domain.cartItem;
+package com.ecommerceapi.api.dtos.cartItem;
 
 public record UpdateItemRequestDTO(int quantity) {
 }

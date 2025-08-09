@@ -1,6 +1,4 @@
-package com.ecommerceapi.api.domain.product;
-
-import com.ecommerceapi.api.domain.category.Category;
+package com.ecommerceapi.api.dtos.product;
 
 import java.math.BigDecimal;
 import java.util.UUID;

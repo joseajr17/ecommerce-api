@@ -1,4 +1,4 @@
-package com.ecommerceapi.api.domain.cart;
+package com.ecommerceapi.api.dtos.cart;
 
 import java.util.UUID;
 

@@ -1,11 +1,11 @@
 package com.ecommerceapi.api.services;
 
-import com.ecommerceapi.api.domain.cart.AddToCartRequestDTO;
+import com.ecommerceapi.api.dtos.cart.AddToCartRequestDTO;
 import com.ecommerceapi.api.domain.cart.Cart;
-import com.ecommerceapi.api.domain.cart.CartResponseDTO;
+import com.ecommerceapi.api.dtos.cart.CartResponseDTO;
 import com.ecommerceapi.api.domain.cartItem.CartItem;
-import com.ecommerceapi.api.domain.cartItem.CartItemResponseDTO;
-import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
+import com.ecommerceapi.api.dtos.cartItem.CartItemResponseDTO;
+import com.ecommerceapi.api.dtos.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.domain.product.Product;
 import com.ecommerceapi.api.domain.user.User;
 import com.ecommerceapi.api.repositories.*;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

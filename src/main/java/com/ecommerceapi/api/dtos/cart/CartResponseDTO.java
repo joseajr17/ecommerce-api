@@ -1,6 +1,6 @@
-package com.ecommerceapi.api.domain.cart;
+package com.ecommerceapi.api.dtos.cart;
 
-import com.ecommerceapi.api.domain.cartItem.CartItemResponseDTO;
+import com.ecommerceapi.api.dtos.cartItem.CartItemResponseDTO;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.ecommerceapi.api.controllers;
 
-import com.ecommerceapi.api.domain.user.AuthenticationDTO;
-import com.ecommerceapi.api.domain.user.LoginResponseDTO;
-import com.ecommerceapi.api.domain.user.RegisterDTO;
+import com.ecommerceapi.api.dtos.user.AuthenticationDTO;
+import com.ecommerceapi.api.dtos.user.LoginResponseDTO;
+import com.ecommerceapi.api.dtos.user.RegisterDTO;
 import com.ecommerceapi.api.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

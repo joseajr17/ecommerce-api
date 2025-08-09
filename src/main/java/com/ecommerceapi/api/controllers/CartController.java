@@ -1,9 +1,9 @@
 package com.ecommerceapi.api.controllers;
 
-import com.ecommerceapi.api.domain.cart.AddToCartRequestDTO;
-import com.ecommerceapi.api.domain.cart.CartResponseDTO;
+import com.ecommerceapi.api.dtos.cart.AddToCartRequestDTO;
+import com.ecommerceapi.api.dtos.cart.CartResponseDTO;
 import com.ecommerceapi.api.domain.cartItem.CartItem;
-import com.ecommerceapi.api.domain.cartItem.UpdateItemRequestDTO;
+import com.ecommerceapi.api.dtos.cartItem.UpdateItemRequestDTO;
 import com.ecommerceapi.api.repositories.UserRepository;
 import com.ecommerceapi.api.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;

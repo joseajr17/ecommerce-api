@@ -1,7 +1,7 @@
 package com.ecommerceapi.api.services;
 
-import com.ecommerceapi.api.domain.user.AuthenticationDTO;
-import com.ecommerceapi.api.domain.user.RegisterDTO;
+import com.ecommerceapi.api.dtos.user.AuthenticationDTO;
+import com.ecommerceapi.api.dtos.user.RegisterDTO;
 import com.ecommerceapi.api.domain.user.User;
 import com.ecommerceapi.api.domain.user.UserRole;
 import com.ecommerceapi.api.infra.security.TokenService;

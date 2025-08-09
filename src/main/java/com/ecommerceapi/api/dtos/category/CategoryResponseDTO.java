@@ -1,4 +1,4 @@
-package com.ecommerceapi.api.domain.category;
+package com.ecommerceapi.api.dtos.category;
 
 import java.util.UUID;
 

@@ -1,8 +1,8 @@
 package com.ecommerceapi.api.services;
 
 import com.ecommerceapi.api.domain.category.Category;
-import com.ecommerceapi.api.domain.category.CategoryRequestDTO;
-import com.ecommerceapi.api.domain.category.CategoryResponseDTO;
+import com.ecommerceapi.api.dtos.category.CategoryRequestDTO;
+import com.ecommerceapi.api.dtos.category.CategoryResponseDTO;
 import com.ecommerceapi.api.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

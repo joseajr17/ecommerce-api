@@ -1,4 +1,4 @@
-package com.ecommerceapi.api.domain.order;
+package com.ecommerceapi.api.dtos.order;
 
 public record OrderStatusRequestDTO(String status) {
 }

@@ -1,4 +1,4 @@
-package com.ecommerceapi.api.domain.payment;
+package com.ecommerceapi.api.dtos.payment;
 
 import java.math.BigDecimal;
 import java.util.Date;

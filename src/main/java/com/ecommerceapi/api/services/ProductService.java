@@ -1,10 +1,10 @@
 package com.ecommerceapi.api.services;
 
 import com.ecommerceapi.api.domain.category.Category;
-import com.ecommerceapi.api.domain.category.CategoryResponseDTO;
+import com.ecommerceapi.api.dtos.category.CategoryResponseDTO;
 import com.ecommerceapi.api.domain.product.Product;
-import com.ecommerceapi.api.domain.product.ProductRequestDTO;
-import com.ecommerceapi.api.domain.product.ProductResponseDTO;
+import com.ecommerceapi.api.dtos.product.ProductRequestDTO;
+import com.ecommerceapi.api.dtos.product.ProductResponseDTO;
 import com.ecommerceapi.api.repositories.CategoryRepository;
 import com.ecommerceapi.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

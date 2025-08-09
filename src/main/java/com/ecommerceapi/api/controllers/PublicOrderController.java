@@ -1,7 +1,7 @@
 package com.ecommerceapi.api.controllers;
 
-import com.ecommerceapi.api.domain.order.OrderResponseDTO;
-import com.ecommerceapi.api.domain.payment.PaymentResponseDTO;
+import com.ecommerceapi.api.dtos.order.OrderResponseDTO;
+import com.ecommerceapi.api.dtos.payment.PaymentResponseDTO;
 import com.ecommerceapi.api.repositories.UserRepository;
 import com.ecommerceapi.api.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
